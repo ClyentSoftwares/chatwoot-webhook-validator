@@ -25,14 +25,13 @@ const chatwootWebhookPlugin: FastifyPluginCallback<ChatwootWebhookOptions> = (
       const preHandler = Array.isArray(routeOptions.preHandler)
         ? routeOptions.preHandler
         : routeOptions.preHandler
-        ? [routeOptions.preHandler]
-        : [];
+          ? [routeOptions.preHandler]
+          : [];
 
       routeOptions.preHandler = [
         ...preHandler,
         async (request, reply) => {
-          const signature =
-            request.headers[validator.signatureHeader.toLowerCase()];
+          const signature = request.headers[validator.signatureHeader.toLowerCase()];
           const timestamp = parseInt(
             request.headers[validator.timestampHeader.toLowerCase()] as string,
             10

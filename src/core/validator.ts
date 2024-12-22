@@ -15,11 +15,7 @@ export class ChatwootWebhookValidator {
     this.timestampHeader = options?.timestampHeader ?? 'x-chatwoot-timestamp';
   }
 
-  public validate(
-    rawBody: string,
-    signature: string,
-    timestamp: number
-  ): ValidationResult {
+  public validate(rawBody: string, signature: string, timestamp: number): ValidationResult {
     try {
       const timestampAge = Math.floor(Date.now() / 1000) - timestamp;
 
@@ -39,7 +35,7 @@ export class ChatwootWebhookValidator {
       );
 
       return { isValid };
-    } catch (error) {
+    } catch {
       return { isValid: false, error: 'Invalid signature format' };
     }
   }

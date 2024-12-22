@@ -2,16 +2,9 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { ChatwootWebhookValidator } from '../core/validator';
 import { ValidatorOptions } from '../core/types';
 
-export function createChatwootWebhookMiddleware(
-  hmacToken: string,
-  options?: ValidatorOptions
-) {
+export function createChatwootWebhookMiddleware(hmacToken: string, options?: ValidatorOptions) {
   const validator = new ChatwootWebhookValidator(hmacToken, options);
-  return function validateChatwootWebhook(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  return function validateChatwootWebhook(req: Request, res: Response, next: NextFunction) {
     const signature = req.get(validator.signatureHeader);
     const timestamp = parseInt(req.get(validator.timestampHeader) || '', 10);
     const rawBody = req.body;
